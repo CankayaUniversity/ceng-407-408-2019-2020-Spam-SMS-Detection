@@ -35,7 +35,7 @@ export default class Form extends Component {
         }
 
         if (this.props.type !== 'Login') {
-            AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
+            //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
             http.post('/register', { email, password })
                 .then(() => {
                     Keyboard.dismiss();
@@ -49,9 +49,15 @@ export default class Form extends Component {
             http.post('/login', { email, password })
                 .then((res) => {
                     console.log('SUCCESS')
-                    if (res.loginDetails)
-                        setSessionTicket(String(res.loginDetails));
-                    Actions.home({type: 'reset'})
+                    console.log(email, password)
+                    console.log(res.data)
+                    
+                    if (res.data.includes("Invalid username and password")) {
+                        alert("Wrong or invalid email");
+                    } else {
+                        this.setSessionTicket(String(email));
+                        Actions.home({ type: 'reset' })
+                    }
                 })
                 .catch((err) => {
                     console.log(err);

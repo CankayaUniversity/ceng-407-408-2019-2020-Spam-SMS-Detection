@@ -8,18 +8,26 @@ export default class Start extends Component {
     constructor(props) {
         super(props);
 
+        //this.setDefaultSession();
         this.isLoginControl();
     }
 
     isLogin = async () => {
         var session = await AsyncStorage.getItem("session_ticket");
-        if (session != null)
-            return true;
-        return false;
+        console.log(session);
+        if (session === null || session === "null")
+            return false;
+        return true;
+    }
+
+    
+    setDefaultSession = async () => {
+        AsyncStorage.setItem("session_ticket", "null");
     }
 
     async isLoginControl() {
         this.isLogin().then((res) => {
+            console.log(res);
             if (res)
                 Actions.home({ type: 'reset' });
             else

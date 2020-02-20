@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
 
 export default class Home extends Component {
+    constructor(props) {
+        super(props);
+
+        this.showData();
+    }
+
+    showData = async () => {
+        var session = await AsyncStorage.getItem("session_ticket");
+        alert('session: ' + session);
+    }
+
     render() {
         return (
             <View style={styles.container}>
