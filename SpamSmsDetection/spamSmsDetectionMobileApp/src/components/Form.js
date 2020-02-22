@@ -16,6 +16,8 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
+            phone: '',
             email: '',
             password: ''
         }
@@ -26,7 +28,7 @@ export default class Form extends Component {
     }
 
     saveData = async () => {
-        const { email, password } = this.state;
+        const { username, email, password, phone } = this.state;
 
         //save data with asyncstorage
         let loginDetails = {
@@ -36,7 +38,7 @@ export default class Form extends Component {
 
         if (this.props.type !== 'Login') {
             //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-            http.post('/register', { email, password })
+            http.post('/register', { username, email, password, phone })
                 .then(() => {
                     Keyboard.dismiss();
                     alert("You successfully registered. Email: " + email + ' password: ' + password);
@@ -51,7 +53,7 @@ export default class Form extends Component {
                     console.log('SUCCESS')
                     console.log(email, password)
                     console.log(res.data)
-                    
+
                     if (res.data.includes("Invalid username and password")) {
                         alert("Wrong or invalid email");
                     } else {
@@ -73,31 +75,72 @@ export default class Form extends Component {
     }
 
     render() {
+        const signupScreen = <View style={styles.container}>
+            <TextInput style={styles.inputBox}
+                onChangeText={(username) => this.setState({ username })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Username"
+                placeholderTextColor="#002f6c"
+                selectionColor="#fff"
+                onSubmitEditing={() => this.password.focus()} />
+
+            <TextInput style={styles.inputBox}
+                onChangeText={(phone) => this.setState({ phone })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Phone Number"
+                placeholderTextColor="#002f6c"
+                selectionColor="#fff"
+                onSubmitEditing={() => this.password.focus()} />
+
+            <TextInput style={styles.inputBox}
+                onChangeText={(email) => this.setState({ email })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Email"
+                placeholderTextColor="#002f6c"
+                selectionColor="#fff"
+                keyboardType="email-address"
+                onSubmitEditing={() => this.password.focus()} />
+
+            <TextInput style={styles.inputBox}
+                onChangeText={(password) => this.setState({ password })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Password"
+                secureTextEntry={true}
+                placeholderTextColor="#002f6c"
+                ref={(input) => this.password = input}
+            />
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText} onPress={this.saveData}>{this.props.type}</Text>
+            </TouchableOpacity>
+        </View>;
+
+        const loginScreen = <View style={styles.container}>
+            <TextInput style={styles.inputBox}
+                onChangeText={(email) => this.setState({ email })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Email"
+                placeholderTextColor="#002f6c"
+                selectionColor="#fff"
+                keyboardType="email-address"
+                onSubmitEditing={() => this.password.focus()} />
+
+            <TextInput style={styles.inputBox}
+                onChangeText={(password) => this.setState({ password })}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Password"
+                secureTextEntry={true}
+                placeholderTextColor="#002f6c"
+                ref={(input) => this.password = input}
+            />
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText} onPress={this.saveData}>{this.props.type}</Text>
+            </TouchableOpacity>
+        </View>;
+
         return (
-            <View style={styles.container}>
-                <TextInput style={styles.inputBox}
-                    onChangeText={(email) => this.setState({ email })}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Email"
-                    placeholderTextColor="#002f6c"
-                    selectionColor="#fff"
-                    keyboardType="email-address"
-                    onSubmitEditing={() => this.password.focus()} />
-
-                <TextInput style={styles.inputBox}
-                    onChangeText={(password) => this.setState({ password })}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Password"
-                    secureTextEntry={true}
-                    placeholderTextColor="#002f6c"
-                    ref={(input) => this.password = input}
-                />
-
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText} onPress={this.saveData}>{this.props.type}</Text>
-                </TouchableOpacity>
-            </View>
-
+            this.props.type == 'Login' ? loginScreen : signupScreen
         )
     }
 }

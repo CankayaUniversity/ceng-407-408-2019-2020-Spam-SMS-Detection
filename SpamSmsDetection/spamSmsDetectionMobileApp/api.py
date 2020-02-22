@@ -24,17 +24,23 @@ CORS(app)
 def register():
     request.get_json(force=True)
     cur = mysql.connection.cursor()
+    username = request.get_json()['username']
+    phone = request.get_json()['phone']
     email = request.get_json()['email']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
 	
-    cur.execute("INSERT INTO users (email, password) VALUES ('" +  
-		str(email) + "', '" + 
-		str(password) + "')")
+    cur.execute("INSERT INTO users (username, email, password, phone) VALUES ('" +  
+		str(username) + "', '" +
+        str(email) + "', '" +
+        str(password) + "', '" + 
+		str(phone) + "')")
     mysql.connection.commit()
 	
     result = {
+        'username': username,
 		'email' : email,
-		'password' : password
+		'password' : password,
+        'phone': phone
 	}
 
     return jsonify({'result' : result})
@@ -55,9 +61,28 @@ def login():
         access_token = create_access_token(identity = {'email': rv['email']})
         result = access_token
     else:
-        result = jsonify({"error":"Invalid username and password"})
+        result = jsonify({"error":"Invalid email and password"})
     
     return result
+
+@app.route('/home', methods=['POST'])
+def home():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    email = request.get_json()['email']
+    result = ""
 	
+    rv = cur.execute("SELECT text, sender FROM messages where userEmail = '" + str(email) + "'")
+    rv = cur.fetchall()
+
+    print(rv)
+
+    response = app.response_class(
+        response=json.dumps(rv),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
