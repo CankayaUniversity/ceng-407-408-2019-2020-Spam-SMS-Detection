@@ -19,7 +19,8 @@ export default class Form extends Component {
             username: '',
             phone: '',
             email: '',
-            password: ''
+            password: '',
+            avatar: 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'
         }
     }
 
@@ -28,7 +29,7 @@ export default class Form extends Component {
     }
 
     saveData = async () => {
-        const { username, email, password, phone } = this.state;
+        const { username, email, password, phone, avatar } = this.state;
 
         //save data with asyncstorage
         let loginDetails = {
@@ -36,9 +37,9 @@ export default class Form extends Component {
             password: password
         }
 
-        if (this.props.type !== 'Login') {
+        if (this.props.type !== 'Login') {            
             //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-            http.post('/register', { username, email, password, phone })
+            http.post('/register', { username, email, password, phone, avatar })
                 .then(() => {
                     Keyboard.dismiss();
                     alert("You successfully registered. Email: " + email + ' password: ' + password);

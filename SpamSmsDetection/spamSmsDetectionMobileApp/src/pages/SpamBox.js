@@ -11,7 +11,7 @@ const http = axios.create({
     withCredentials: true
 })
 
-export default class Home extends Component {
+export default class SpamBox extends Component {
     constructor(props) {
         super(props);
 
@@ -20,22 +20,16 @@ export default class Home extends Component {
         }
 
         this.getData();
-        this.showData();
     }
 
-    spambox() {
-        Actions.spambox()
-    }
-
-    showData = async () => {
-        var session = await AsyncStorage.getItem("session_ticket");
-        alert('session: ' + session);
+    home() {
+        Actions.home()
     }
 
     getData = async () => {
         var email = await AsyncStorage.getItem("session_ticket");
 
-        http.post('/home', { email })
+        http.post('/spambox', { email })
             .then((res) => {
                 var dataJson = res.request._response
 
@@ -64,14 +58,14 @@ export default class Home extends Component {
             chevron
         />
     )
-
+    
     render() {
         return (
             <View>
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText} onPress={() => this.spambox()}>Spam Box</Text>
+                    <Text style={styles.buttonText} onPress={() => this.home()}>All Messages</Text>
                 </TouchableOpacity>
-                <Text style={styles.headerText}>All Messages</Text>
+                <Text style={styles.headerText}>Spam Box</Text>
                 <Text>{'\n'}</Text>
                 <FlatList
                     keyExtractor={this.keyExtractor}

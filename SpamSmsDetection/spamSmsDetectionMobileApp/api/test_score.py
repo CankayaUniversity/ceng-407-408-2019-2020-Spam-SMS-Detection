@@ -13,7 +13,7 @@ from sklearn.svm import *
 import pandas
 import csv
 
-data = pandas.read_csv('spam.csv', encoding='latin-1')
+data = pandas.read_csv('C:/Users/egedi/OneDrive/Belgeler/GitHub/ceng-407-408-2019-2020-Spam-SMS-Detection/SpamSmsDetection/spamSmsDetectionMobileApp/api/spam.csv', encoding='latin-1')
 train_data = data[:4400] # 4400 items
 test_data = data[4400:] # 1172 items
 
@@ -44,7 +44,7 @@ for index, row in test_data.iterrows():
 
 
 # write csv
-with open('test_score.csv', 'w', encoding="utf-8", newline='') as csvfile:
+with open('C:/Users/egedi/OneDrive/Belgeler/GitHub/ceng-407-408-2019-2020-Spam-SMS-Detection/SpamSmsDetection/spamSmsDetectionMobileApp/api/test_score.csv', 'w', encoding="utf-8", newline='') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=';',
             quotechar='"', quoting=csv.QUOTE_MINIMAL)
     spamwriter.writerow(['#', 'text', 'answer', 'predict', result])

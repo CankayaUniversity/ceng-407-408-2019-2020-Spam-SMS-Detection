@@ -30,7 +30,7 @@ def perform(classifiers, vectorizers, train_data, test_data):
         print(string)
 
 # open data-set and divide it
-data = pandas.read_csv('spam.csv', encoding='latin-1')
+data = pandas.read_csv('C:/Users/egedi/OneDrive/Belgeler/GitHub/ceng-407-408-2019-2020-Spam-SMS-Detection/SpamSmsDetection/spamSmsDetectionMobileApp/api/spam.csv', encoding='latin-1')
 learn = data[:4400] # 4400 items
 test = data[4400:] # 1172 items
 
