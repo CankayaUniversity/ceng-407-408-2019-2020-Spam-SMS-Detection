@@ -156,5 +156,55 @@ def spambox():
     )
     return response
 
+@app.route('/delete', methods=['POST'])
+def delete():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    text = request.get_json()['text']
+    email = request.get_json()['email']
+    result = ""
+
+    cur.execute("DELETE FROM messages where text = '" + str(text) + "'")
+    cur.fetchall()
+    mysql.connection.commit()
+
+    rv = cur.execute("SELECT text, sender, users.avatar FROM messages, users where userEmail = '" + str(email) + "' and messages.userEmail=users.email")
+    rv = cur.fetchall()
+
+    #print(rv)
+
+    response = app.response_class(
+        response=json.dumps(rv),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+@app.route('/deletespam', methods=['POST'])
+def deletespam():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    text = request.get_json()['text']
+    email = request.get_json()['email']
+    result = ""
+
+    cur.execute("DELETE FROM messages where text = '" + str(text) + "'")
+    cur.fetchall()
+    mysql.connection.commit()
+
+    rv = cur.execute("SELECT text, sender, users.avatar FROM messages, users where userEmail = '" + str(email) + "' and messages.userEmail=users.email and messages.isSpam=1")
+    rv = cur.fetchall()
+
+    #print(rv)
+
+    response = app.response_class(
+        response=json.dumps(rv),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

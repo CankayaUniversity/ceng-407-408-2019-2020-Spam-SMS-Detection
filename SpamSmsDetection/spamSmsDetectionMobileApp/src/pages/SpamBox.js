@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage, Keyboard, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import Swipeout from 'react-native-swipeout';
+import Icon from "react-native-vector-icons/Ionicons";
 
 import axios from 'axios';
 
@@ -16,7 +18,8 @@ export default class SpamBox extends Component {
         super(props);
 
         this.state = {
-            message: {}
+            message: {},
+            rowIndex: null
         }
 
         this.getData();
@@ -47,29 +50,105 @@ export default class SpamBox extends Component {
 
     }
 
+    rightSwipeOutButtons(item) {
+        return [
+            {
+                text: "Remove",
+                onPress: () => this.removeItem(item),
+                backgroundColor: "#FF4500",
+                color: "#FFF"
+            }
+        ];
+    }
+
+    removeItem = async (item) => {
+        /*let list = this.state.message.filter(item => {
+            return item != listItem;
+        });
+
+        this.setState({ list });*/
+
+        var email = await AsyncStorage.getItem("session_ticket");
+        var text = item.text;
+
+        http.post('/deletespam', { text, email })
+            .then((res) => {
+                var dataJson = res.request._response
+
+                var obj = JSON.parse(dataJson);
+
+                this.setState({
+                    message: { obj },
+                })
+                console.log(this.state.message)
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Wrong");
+            })
+    }
+
+    onSwipeOpen(rowIndex) {
+        this.setState({
+            rowIndex: rowIndex
+        })
+    }
+    onSwipeClose(rowIndex) {
+        if (rowIndex === this.state.rowIndex) {
+            this.setState({ rowIndex: null });
+        }
+    }
+
     keyExtractor = (item, index) => index.toString()
 
-    renderItem = ({ item }) => (
-        <ListItem
-            leftAvatar={{ source: { uri: item.avatar } }}
-            title={item.sender}
-            subtitle={item.text}
-            bottomDivider
-            chevron
-        />
+    renderItem = ({ item, index }) => (
+        <Swipeout
+            right={this.rightSwipeOutButtons(item)}
+            backgroundColor={"transparent"}
+            onOpen={() => (this.onSwipeOpen(index))}
+            close={this.state.rowIndex !== index}
+            onClose={() => (this.onSwipeClose(index))}
+            rowIndex={index}
+            sectionId={0}
+            autoClose={true}
+        >
+            <ListItem
+                leftAvatar={{ source: { uri: item.avatar } }}
+                title={item.sender}
+                subtitle={item.text}
+                bottomDivider={true}
+                onPress={() =>
+                    Alert.alert(
+                        item.sender,
+                        item.text
+                    )
+                }
+            />
+        </Swipeout>
     )
-    
+
     render() {
         return (
             <View>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText} onPress={() => this.home()}>All Messages</Text>
-                </TouchableOpacity>
+                <View style={styles.row}>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText} onPress={() => this.home()}>All Messages</Text>
+                    </TouchableOpacity>
+                    <View style={styles.icon}>
+                        <Icon
+                            name="md-settings"
+                            color="#D3D6D7"
+                            size={30}
+                            onPress={() => console.log('hello')}
+                        />
+                    </View>
+                </View>
                 <Text style={styles.headerText}>Spam Box</Text>
                 <Text>{'\n'}</Text>
                 <FlatList
                     keyExtractor={this.keyExtractor}
                     data={this.state.message.obj}
+                    extraData={this.state.rowIndex}
                     renderItem={this.renderItem}
                 />
             </View>
@@ -83,6 +162,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    row: {
+        flexDirection: 'row',
+    },
+    icon: {
+        marginLeft: 'auto',
+        marginVertical: 8,
+        marginHorizontal: 6,
     },
     headerText: {
         color: '#000000',
