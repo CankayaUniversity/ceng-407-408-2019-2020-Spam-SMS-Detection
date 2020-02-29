@@ -228,7 +228,22 @@ def deleteaccount():
     )
     return response
 
+@app.route('/changephone', methods=['POST'])
+def changephone():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    phone = request.get_json()['phone']
+    email = request.get_json()['email']
+	
+    cur.execute("UPDATE users SET phone = '" + str(phone) + "' WHERE email = '" + str(email) + "'")
+    mysql.connection.commit()
+	
+    result = {
+		'email' : email,
+        'phone': phone,
+	}
 
+    return jsonify({'result' : result})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
