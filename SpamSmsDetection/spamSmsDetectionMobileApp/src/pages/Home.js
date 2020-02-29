@@ -30,6 +30,10 @@ export default class Home extends Component {
         Actions.spambox()
     }
 
+    settings() {
+        Actions.settings()
+    }
+
     showData = async () => {
         var session = await AsyncStorage.getItem("session_ticket");
         alert('session: ' + session);
@@ -145,11 +149,10 @@ export default class Home extends Component {
                             name="md-settings"
                             color="#D3D6D7"
                             size={30}
-                            onPress={() => console.log('hello')}
+                            onPress={() => this.settings()}
                         />
                     </View>
                 </View>
-                <Text style={styles.headerText}>All Messages</Text>
                 <Text>{'\n'}</Text>
                 <FlatList
                     keyExtractor={this.keyExtractor}
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 150,
-        backgroundColor: '#D3D6D7',
+        backgroundColor: '#d38aed',
         borderRadius: 25,
         marginVertical: 6,
         paddingVertical: 8,
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#000000',
+        color: '#ffffff',
         textAlign: 'center'
     }
 });

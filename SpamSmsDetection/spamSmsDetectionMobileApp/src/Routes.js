@@ -6,21 +6,25 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import SpamBox from './pages/SpamBox';
+import Settings from './pages/Settings';
+import UserInformation from './pages/UserInformation';
 
 export default class Routes extends Component {
     render() {
         return (
             <Router barButtonIconStyle={styles.barButtonIconStyle}
                 hideNavBar={false}
-                navigationBarStyle={{ backgroundColor: '#1565c0', }}
+                navigationBarStyle={{ backgroundColor: '#69078c', }}
                 titleStyle={{ color: 'white', }}
             >
                 <Stack key="root">
                     <Scene key="start" component={Start} />
                     <Scene key="login" component={Login} title="Login" />
                     <Scene key="signup" component={Signup} title="Sign up" />
-                    <Scene key="home" component={Home} renderBackButton={() => (null)} renderLeftButton={() => (null)} />
-                    <Scene key="spambox" component={SpamBox} renderBackButton={() => (null)} renderLeftButton={() => (null)} />
+                    <Scene key="home" component={Home} title="All Messages" renderBackButton={() => (null)} renderLeftButton={() => (null)} />
+                    <Scene key="spambox" component={SpamBox} title="Spam Box" renderBackButton={() => (null)} renderLeftButton={() => (null)} />
+                    <Scene key="settings" component={Settings} title="Settings" />
+                    <Scene key="userinformation" component={UserInformation} title="User Information" />
                 </Stack>
             </Router>
         )

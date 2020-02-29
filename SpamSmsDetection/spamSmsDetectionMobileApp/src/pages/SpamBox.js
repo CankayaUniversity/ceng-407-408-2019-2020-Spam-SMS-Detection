@@ -29,6 +29,10 @@ export default class SpamBox extends Component {
         Actions.home()
     }
 
+    settings() {
+        Actions.settings()
+    }
+
     getData = async () => {
         var email = await AsyncStorage.getItem("session_ticket");
 
@@ -139,11 +143,10 @@ export default class SpamBox extends Component {
                             name="md-settings"
                             color="#D3D6D7"
                             size={30}
-                            onPress={() => console.log('hello')}
+                            onPress={() => this.settings()}
                         />
                     </View>
                 </View>
-                <Text style={styles.headerText}>Spam Box</Text>
                 <Text>{'\n'}</Text>
                 <FlatList
                     keyExtractor={this.keyExtractor}
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 150,
-        backgroundColor: '#D3D6D7',
+        backgroundColor: '#d38aed',
         borderRadius: 25,
         marginVertical: 6,
         paddingVertical: 8,
@@ -193,7 +196,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#000000',
+        color: '#ffffff',
         textAlign: 'center'
     }
 });

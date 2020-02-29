@@ -204,6 +204,30 @@ def deletespam():
     )
     return response
 
+@app.route('/deleteaccount', methods=['POST'])
+def deleteaccount():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    email = request.get_json()['email']
+    result = ""
+
+    cur.execute("DELETE FROM messages where userEmail = '" + str(email) + "'")
+    cur.fetchall()
+    mysql.connection.commit()
+
+    rv = cur.execute("DELETE FROM users where email = '" + str(email) + "'")
+    rv = cur.fetchall()
+    mysql.connection.commit()
+
+    #print(rv)
+
+    response = app.response_class(
+        response=json.dumps(rv),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
 
 
 if __name__ == '__main__':
