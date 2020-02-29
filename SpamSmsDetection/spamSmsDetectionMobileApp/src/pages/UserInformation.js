@@ -22,6 +22,10 @@ export default class UserInformation extends Component {
         Actions.changenumber();
     }
 
+    changeEmail() {
+        Actions.changeemail();
+    }
+
     render() {
         return (
             <View>
@@ -31,7 +35,7 @@ export default class UserInformation extends Component {
                         <Text style={styles.buttonText} onPress={() => this.changeTelephoneNumber()}>Change Telephone Number</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText} onPress={() => console.log("Change email")}>Change Email</Text>
+                        <Text style={styles.buttonText} onPress={() => this.changeEmail()}>Change Email</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttonText} onPress={() => console.log("Change password")}>Change Password</Text>

@@ -245,5 +245,23 @@ def changephone():
 
     return jsonify({'result' : result})
 
+@app.route('/changeemail', methods=['POST'])
+def changeemail():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    email = request.get_json()['email']
+    emailCurrent = request.get_json()['emailCurrent']
+	
+    cur.execute("UPDATE users SET email = '" + str(email) + "' WHERE email = '" + str(emailCurrent) + "'")
+    cur.execute("UPDATE messages SET userEmail = '" + str(email) + "' WHERE userEmail = '" + str(emailCurrent) + "'")
+    cur.fetchall()
+    mysql.connection.commit()
+	
+    result = {
+		'email' : email,
+	}
+
+    return jsonify({'result' : result})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

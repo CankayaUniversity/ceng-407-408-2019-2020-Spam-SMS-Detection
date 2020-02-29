@@ -13,26 +13,31 @@ const http = axios.create({
     withCredentials: true
 })
 
-export default class ChangeNumber extends Component {
+export default class ChangeEmail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            phone: null
+            email: null
         }
     }
 
-    saveData = async () => {
-        const { phone } = this.state;
-        var email = await AsyncStorage.getItem("session_ticket");
+    setSessionTicket = async (ticket) => {
+        AsyncStorage.setItem("session_ticket", ticket);
+    }
 
-        http.post('/changephone', { email, phone })
+    saveData = async () => {
+        const { email } = this.state;
+        var emailCurrent = await AsyncStorage.getItem("session_ticket");
+
+        http.post('/changeemail', { email, emailCurrent })
             .then(() => {
                 Keyboard.dismiss();
-                alert("You have successfully changed your phone number. Phone number: " + phone);
+                alert("You have successfully changed your email. Email: " + email);
+                this.setSessionTicket(String(email));
             })
             .catch((err) => {
                 console.log(err);
-                alert("Invalid entry or such a phone number already exists. Phone number: " + phone);
+                alert("Invalid entry or such an email already exists. Email: " + email);
             })
     }
 
@@ -41,12 +46,13 @@ export default class ChangeNumber extends Component {
             <View style={styles.container}>
                 <Text>{'\n'}</Text>
                 <TextInput style={styles.inputBox}
-                    onChangeText={(phone) => this.setState({ phone })}
+                    onChangeText={(email) => this.setState({ email })}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Phone Number"
+                    placeholder="Email"
                     placeholderTextColor="#002f6c"
                     selectionColor="#fff"
-                    onSubmitEditing={() => this.phone.focus()} />
+                    keyboardType="email-address"
+                    onSubmitEditing={() => this.email.focus()} />
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText} onPress={this.saveData}>Update</Text>
                 </TouchableOpacity>

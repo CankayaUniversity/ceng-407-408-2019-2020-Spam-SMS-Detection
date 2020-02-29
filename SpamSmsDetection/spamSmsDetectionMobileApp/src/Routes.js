@@ -9,6 +9,7 @@ import SpamBox from './pages/SpamBox';
 import Settings from './pages/Settings';
 import UserInformation from './pages/UserInformation';
 import ChangeNumber from './pages/ChangeNumber';
+import ChangeEmail from './pages/ChangeEmail';
 
 export default class Routes extends Component {
     render() {
@@ -27,6 +28,7 @@ export default class Routes extends Component {
                     <Scene key="settings" component={Settings} title="Settings" />
                     <Scene key="userinformation" component={UserInformation} title="User Information" />
                     <Scene key="changenumber" component={ChangeNumber} title="Change Telephone Number" />
+                    <Scene key="changeemail" component={ChangeEmail} title="Change Email" />
                 </Stack>
             </Router>
         )
