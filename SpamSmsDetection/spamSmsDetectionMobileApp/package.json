@@ -22,6 +22,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-native-router-flux": "^4.2.0",
     "react-native-screens": "^2.0.0-beta.4",
+    "react-native-settings-list": "^1.8.0",
     "react-native-swipeout": "^2.3.6",
     "react-native-swipeout-longpressforandroid": "^1.0.10",
     "react-native-vector-icons": "^6.6.0"

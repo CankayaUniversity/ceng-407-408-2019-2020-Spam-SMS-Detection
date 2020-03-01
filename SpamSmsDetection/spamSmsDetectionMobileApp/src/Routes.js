@@ -11,7 +11,6 @@ import UserInformation from './pages/UserInformation';
 import ChangeNumber from './pages/ChangeNumber';
 import ChangeEmail from './pages/ChangeEmail';
 import ChangePassword from './pages/ChangePassword';
-import ChangeAvatar from './pages/ChangeAvatar';
 
 export default class Routes extends Component {
     render() {
@@ -32,7 +31,6 @@ export default class Routes extends Component {
                     <Scene key="changenumber" component={ChangeNumber} title="Change Telephone Number" />
                     <Scene key="changeemail" component={ChangeEmail} title="Change Email" />
                     <Scene key="changepassword" component={ChangePassword} title="Change Password" />
-                    <Scene key="changeavatar" component={ChangeAvatar} title="Change Profile Picture" />
                 </Stack>
             </Router>
         )

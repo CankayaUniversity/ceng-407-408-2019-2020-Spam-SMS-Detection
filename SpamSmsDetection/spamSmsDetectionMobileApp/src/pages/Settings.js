@@ -4,6 +4,7 @@ import { ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Swipeout from 'react-native-swipeout';
 import Icon from "react-native-vector-icons/Ionicons";
+import SettingsList from 'react-native-settings-list';
 
 import axios from 'axios';
 
@@ -16,6 +17,8 @@ const http = axios.create({
 export default class Settings extends Component {
     constructor(props) {
         super(props);
+        this.onValueChange = this.onValueChange.bind(this);
+        this.state = { switchValue: false };
     }
 
     goBack() {
@@ -61,6 +64,82 @@ export default class Settings extends Component {
 
     render() {
         return (
+            <View style={{ backgroundColor: '#ffffff', flex: 1 }}>
+                <View style={{ backgroundColor: '#ffffff', flex: 1 }}>
+                    <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
+                        <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+                        <SettingsList.Item
+                            icon={
+                                <View style={{ height: 30, marginLeft: 10, alignSelf: 'center' }}>
+                                    <Icon
+                                        name="md-people"
+                                        color="#d38aed"
+                                        style={{ alignSelf: 'center' }}
+                                        size={30}
+                                        onPress={() => this.userInformation()}
+                                    />
+                                </View>
+                            }
+                            title='User Information'
+                            onPress={() => this.userInformation()}
+                        />
+                        <SettingsList.Item
+                            icon={
+                                <View style={{ height: 30, marginLeft: 10, alignSelf: 'center' }}>
+                                    <Icon
+                                        name="md-information-circle"
+                                        color="#d38aed"
+                                        style={{ alignSelf: 'center' }}
+                                        size={30}
+                                        onPress={() => Alert.alert('Help')}
+                                    />
+                                </View>
+                            }
+                            title='Help'
+                            onPress={() => Alert.alert('Help')}
+                        />
+                        <SettingsList.Item
+                            icon={
+                                <View style={{ height: 30, marginLeft: 10, alignSelf: 'center' }}>
+                                    <Icon
+                                        name="md-log-out"
+                                        color="#d38aed"
+                                        style={{ alignSelf: 'center' }}
+                                        size={30}
+                                        onPress={() => this.logOut()}
+                                    />
+                                </View>
+                            }
+                            title='Logout'
+                            onPress={() => this.logOut()}
+                        />
+                        <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+                        <SettingsList.Item
+                            icon={
+                                <View style={{ height: 30, marginLeft: 10, alignSelf: 'center' }}>
+                                    <Icon
+                                        name="md-trash"
+                                        color="#FF3333"
+                                        style={{ alignSelf: 'center' }}
+                                        size={30}
+                                        onPress={() => this.deleteAccountAlert()}
+                                    />
+                                </View>
+                            }
+                            title='Delete My Account'
+                            onPress={() => this.deleteAccountAlert()}
+                        />
+                    </SettingsList>
+                </View>
+            </View>
+        );
+    }
+    onValueChange(value) {
+        this.setState({ switchValue: value });
+    }
+
+    /*render() {
+        return (
             <View>
                 <View style={styles.container}>
                     <Text>{'\n'}</Text>
@@ -83,7 +162,7 @@ export default class Settings extends Component {
                 </View>
             </View>
         )
-    }
+    }*/
 }
 
 const styles = StyleSheet.create({
