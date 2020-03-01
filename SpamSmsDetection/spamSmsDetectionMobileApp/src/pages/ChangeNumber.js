@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage, Keyboard, Alert } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
-import Swipeout from 'react-native-swipeout';
-import Icon from "react-native-vector-icons/Ionicons";
 
 import axios from 'axios';
 

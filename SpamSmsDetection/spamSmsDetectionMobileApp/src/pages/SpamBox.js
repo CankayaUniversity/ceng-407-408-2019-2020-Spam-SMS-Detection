@@ -160,12 +160,6 @@ export default class SpamBox extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     row: {
         flexDirection: 'row',
     },
@@ -173,17 +167,6 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginVertical: 8,
         marginHorizontal: 6,
-    },
-    headerText: {
-        color: '#000000',
-        textAlign: 'center',
-        fontSize: 24,
-        fontWeight: '500',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
     },
     button: {
         width: 150,

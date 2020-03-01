@@ -72,12 +72,6 @@ export default class Home extends Component {
     }
 
     removeItem = async (item) => {
-        /*let list = this.state.message.filter(item => {
-            return item != listItem;
-        });
-
-        this.setState({ list });*/
-
         var email = await AsyncStorage.getItem("session_ticket");
         var text = item.text;
 
@@ -166,11 +160,6 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     row: {
         flexDirection: 'row',
     },
@@ -178,17 +167,6 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginVertical: 8,
         marginHorizontal: 6,
-    },
-    headerText: {
-        color: '#000000',
-        textAlign: 'center',
-        fontSize: 24,
-        fontWeight: '500',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
     },
     button: {
         width: 150,
