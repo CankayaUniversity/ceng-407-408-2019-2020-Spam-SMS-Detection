@@ -45,6 +45,13 @@ export default class Settings extends Component {
         )
     }
 
+    helpAlert = async () => {
+        Alert.alert(
+            'Help',
+            '1. This application is designed to filter the test messages on this device and detect spam content. \n\n 2. Upon launching, all of the text messages on this device will be displayed in the All Messages page. \n\n 3. Navigation to the Spam Box is possible by the use of the button with the "Spam Box" tag. \n\n 4. Inside the Spam Box, all of the detected spam messages will be displayed. \n\n 5. Text messages in both the All Messages and the Spam Box pages can be deleted upon choice. \n\n 6. The deletion of a message will result in the automatic deletion of its duplicates, given that there are any. \n\n 7. To update your user information, please use the "User Information" option under Settings. \n\n 8. To log out of the application, please use the "Logout" button under Settings.',
+        )
+    }
+
     deleteAccount = async () => {
         console.log('OK Pressed');
 
@@ -89,12 +96,12 @@ export default class Settings extends Component {
                                         color="#d38aed"
                                         style={{ alignSelf: 'center' }}
                                         size={30}
-                                        onPress={() => Alert.alert('Help')}
+                                        onPress={() => this.helpAlert()}
                                     />
                                 </View>
                             }
                             title='Help'
-                            onPress={() => Alert.alert('Help')}
+                            onPress={() => this.helpAlert()}
                         />
                         <SettingsList.Item
                             icon={
@@ -139,8 +146,8 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 30, 
-        marginLeft: 10, 
+        height: 30,
+        marginLeft: 10,
         alignSelf: 'center'
     }
 });

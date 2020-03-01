@@ -54,7 +54,7 @@ export default class UserInformation extends Component {
                             icon={
                                 <View style={styles.container}>
                                     <Icon
-                                        name="md-mail"
+                                        name="md-at"
                                         color="#d38aed"
                                         style={{ alignSelf: 'center' }}
                                         size={30}

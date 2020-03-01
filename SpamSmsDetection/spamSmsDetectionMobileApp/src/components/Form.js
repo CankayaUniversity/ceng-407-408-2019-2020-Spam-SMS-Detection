@@ -43,6 +43,7 @@ export default class Form extends Component {
                 .then(() => {
                     Keyboard.dismiss();
                     alert("You successfully registered. Email: " + email + ' password: ' + password);
+                    Actions.login();
                 })
                 .catch((err) => {
                     console.log(err);
