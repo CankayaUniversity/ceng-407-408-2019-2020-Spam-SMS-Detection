@@ -263,5 +263,22 @@ def changeemail():
 
     return jsonify({'result' : result})
 
+@app.route('/changepassword', methods=['POST'])
+def changepassword():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    email = request.get_json()['email']
+    password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
+	
+    cur.execute("UPDATE users SET password = '" + str(password) + "' WHERE email = '" + str(email) + "'")
+    mysql.connection.commit()
+	
+    result = {
+		'email' : email,
+        'password' : password
+	}
+
+    return jsonify({'result' : result})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

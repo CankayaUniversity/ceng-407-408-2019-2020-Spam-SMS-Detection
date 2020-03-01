@@ -16,10 +16,10 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            phone: '',
-            email: '',
-            password: '',
+            username: null,
+            phone: null,
+            email: null,
+            password: null,
             avatar: 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'
         }
     }

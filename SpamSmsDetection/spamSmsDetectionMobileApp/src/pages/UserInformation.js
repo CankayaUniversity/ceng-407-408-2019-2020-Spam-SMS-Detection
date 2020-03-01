@@ -26,11 +26,22 @@ export default class UserInformation extends Component {
         Actions.changeemail();
     }
 
+    changePassword() {
+        Actions.changepassword();
+    }
+
+    changeAvatar() {
+        Actions.changeavatar();
+    }
+
     render() {
         return (
             <View>
                 <View style={styles.container}>
                     <Text>{'\n'}</Text>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText} onPress={() => this.changeAvatar()}>Change Profile Picture</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttonText} onPress={() => this.changeTelephoneNumber()}>Change Telephone Number</Text>
                     </TouchableOpacity>
@@ -38,7 +49,7 @@ export default class UserInformation extends Component {
                         <Text style={styles.buttonText} onPress={() => this.changeEmail()}>Change Email</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText} onPress={() => console.log("Change password")}>Change Password</Text>
+                        <Text style={styles.buttonText} onPress={() => this.changePassword()}>Change Password</Text>
                     </TouchableOpacity>
                 </View>
             </View>
