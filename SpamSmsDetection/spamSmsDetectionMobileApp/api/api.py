@@ -109,6 +109,56 @@ def home():
     )
     return response
 
+@app.route('/deleteall', methods=['POST'])
+def deleteall():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    userEmail = request.get_json()['email']
+
+    print(userEmail)
+
+    cur.execute("DELETE FROM messages WHERE id IN ( SELECT id FROM (SELECT * FROM messages) AS messagessub WHERE userEmail='" +  
+		str(userEmail) + "' )")
+    mysql.connection.commit()
+
+    result = {
+        'userEmail': userEmail,
+	}
+
+    return jsonify({'result' : result})
+
+@app.route('/setsms', methods=['POST'])
+def setsms():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    userEmail = request.get_json()['email']
+    text = request.get_json()['textMessage']
+    sender = request.get_json()['sender']
+
+    #cur.execute("INSERT INTO messages (userEmail, text, sender, isSpam) VALUES ('" +  
+	#	str(userEmail) + "', '" +
+    #    str(text) + "', '" +
+    #    str(sender) + "', NULL)")
+    #mysql.connection.commit()
+
+    print(userEmail)
+    print(text)
+    print(sender)
+    
+    sql = "INSERT INTO messages (userEmail, text, sender, isSpam) VALUES (%s, %s, %s, NULL)"
+    values = (userEmail, text, sender)
+    cur.execute(sql, values)
+
+    mysql.connection.commit()
+
+    result = {
+        'userEmail': userEmail,
+		'text' : text,
+		'sender' : sender
+	}
+
+    return jsonify({'result' : result})
+
 @app.route('/spambox', methods=['POST'])
 def spambox():
     request.get_json(force=True)
@@ -140,10 +190,16 @@ def spambox():
             predict = Classifier.predict(vectorize_message)[0]
             #predict_proba = Classifier.predict_proba(vectorize_message).tolist()
             if predict == 'ham':
-                cur.execute("UPDATE messages SET isSpam = 0 WHERE text = '" + str(message) + "'")
+                #sql = "UPDATE messages SET isSpam = 0 WHERE text = %s"
+                #values = (message)
+                #cur.execute(sql, values)
+                cur.execute("UPDATE messages SET isSpam = 0 WHERE text = '" + message + "'")
                 mysql.connection.commit()
             elif predict == 'spam':
-                cur.execute("UPDATE messages SET isSpam = 1 WHERE text = '" + str(message) + "'")
+                #sql = "UPDATE messages SET isSpam = 0 WHERE text = %s"
+                #values = (message)
+                #cur.execute(sql, values)
+                cur.execute("UPDATE messages SET isSpam = 1 WHERE text = '" + message + "'")
                 mysql.connection.commit()
         
     rv = cur.execute("SELECT text, sender, users.avatar FROM messages, users where userEmail = '" + str(email) + "' and messages.userEmail=users.email and messages.isSpam=1")

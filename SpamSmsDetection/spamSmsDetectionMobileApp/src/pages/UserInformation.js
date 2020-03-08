@@ -6,7 +6,8 @@ import SettingsList from 'react-native-settings-list';
 
 import axios from 'axios';
 
-const serverUrl = 'http://192.168.70.2:5000';
+//const serverUrl = 'http://192.168.70.2:5000';
+const serverUrl = 'http://172.20.10.3:5000';
 const http = axios.create({
     baseURL: serverUrl,
     withCredentials: true
