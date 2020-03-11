@@ -171,7 +171,7 @@ def spambox():
     #predict_proba = ''
     #predict = ''
 
-    rv = cur.execute("SELECT text FROM messages where userEmail = '" + str(email) + "' and isSpam is null")
+    rv = cur.execute("SELECT id, text FROM messages where userEmail = '" + str(email) + "' and isSpam is null")
     rv = cur.fetchall()
 
     #print(rv)
@@ -185,6 +185,7 @@ def spambox():
 
     for m in myJson:
         message = m["text"]
+        messageId = m["id"]
         if len(message) > 0:
             vectorize_message = Vectorizer.transform([message])
             predict = Classifier.predict(vectorize_message)[0]
@@ -193,13 +194,13 @@ def spambox():
                 #sql = "UPDATE messages SET isSpam = 0 WHERE text = %s"
                 #values = (message)
                 #cur.execute(sql, values)
-                cur.execute("UPDATE messages SET isSpam = 0 WHERE text = '" + message + "'")
+                cur.execute("UPDATE messages SET isSpam = 0 WHERE id = " + str(messageId))
                 mysql.connection.commit()
             elif predict == 'spam':
                 #sql = "UPDATE messages SET isSpam = 0 WHERE text = %s"
                 #values = (message)
                 #cur.execute(sql, values)
-                cur.execute("UPDATE messages SET isSpam = 1 WHERE text = '" + message + "'")
+                cur.execute("UPDATE messages SET isSpam = 1 WHERE id = " + str(messageId))
                 mysql.connection.commit()
         
     rv = cur.execute("SELECT text, sender, users.avatar FROM messages, users where userEmail = '" + str(email) + "' and messages.userEmail=users.email and messages.isSpam=1")

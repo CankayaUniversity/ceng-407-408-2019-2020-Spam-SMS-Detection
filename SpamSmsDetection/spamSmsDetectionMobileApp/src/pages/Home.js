@@ -10,7 +10,7 @@ import SmsAndroid from 'react-native-get-sms-android';
 import axios from 'axios';
 
 //const serverUrl = 'http://192.168.70.2:5000';
-const serverUrl = 'http://172.20.10.3:5000';
+const serverUrl = 'http://172.16.0.112:5000';
 const http = axios.create({
     baseURL: serverUrl,
     withCredentials: true
@@ -65,13 +65,16 @@ export default class Home extends Component {
         var email = await AsyncStorage.getItem("session_ticket");
 
         http.post('/deleteall', { email })
-            .then((res) => {
+            .then(async (res) => {
                 if (res) {
-                    console.log("All messages deleted")
+                    await console.log("All messages deleted")
                 }
             })
-            .catch((err) => {
-                console.log(err);
+            .then(async () => {
+                await console.log("Yes")
+            })
+            .catch(async (err) => {
+                await console.log(err);
                 alert("Wrong");
             })
 
@@ -86,17 +89,17 @@ export default class Home extends Component {
             indexFrom: 0, // start from index 0
             maxCount: 1000, // count of SMS to return each time
         };
-        await SmsAndroid.list(
+        SmsAndroid.list(
             JSON.stringify(filter),
-            (fail) => {
-                console.log('Failed with this error: ' + fail);
+            async (fail) => {
+                await console.log('Failed with this error: ' + fail);
             },
-            (count, smsList) => {
-                console.log('Count: ', count);
-                console.log('List: ', smsList);
+            async (count, smsList) => {
+                await console.log('Count: ', count);
+                await console.log('List: ', smsList);
                 var arr = JSON.parse(smsList);
 
-                arr.forEach(function (object) {
+                await arr.forEach((object) => {
                     console.log('Id: ' + object._id);
                     console.log('Message: ' + object.body);
                     //alert('Message: ' + object.body)
@@ -113,6 +116,9 @@ export default class Home extends Component {
                             if (res) {
                                 console.log("SMS Added");
                             }
+                        })
+                        .then(() => {
+                            console.log("Yes");
                         })
                         .catch((err) => {
                             console.log(err);
@@ -147,7 +153,7 @@ export default class Home extends Component {
         await this.getSMS();
         var email = await AsyncStorage.getItem("session_ticket");
 
-        http.post('/home', { email })
+        await http.post('/home', { email })
             .then((res) => {
                 var dataJson = res.request._response
 
