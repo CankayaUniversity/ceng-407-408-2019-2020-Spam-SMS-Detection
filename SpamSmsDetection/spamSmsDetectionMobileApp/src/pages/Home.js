@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage, Keyboard, Alert, PermissionsAndroid } from 'react-native';
+import { StyleSheet, Text, View, FlatList, RefreshControl, ActivityIndicator, TextInput, TouchableOpacity, AsyncStorage, Keyboard, Alert, PermissionsAndroid } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Swipeout from 'react-native-swipeout';
@@ -23,6 +23,7 @@ export default class Home extends Component {
         this.state = {
             message: {},
             rowIndex: null,
+            refreshing: true,
         }
 
         //this.getSMS();
@@ -161,6 +162,7 @@ export default class Home extends Component {
 
                 this.setState({
                     message: { obj },
+                    refreshing: false,
                 })
                 console.log(this.state.message)
             })
@@ -230,7 +232,8 @@ export default class Home extends Component {
             <ListItem
                 leftAvatar={{ source: { uri: item.avatar } }}
                 title={item.sender}
-                subtitle={item.text}
+                numberOfLines={1}
+                subtitle={<Text numberOfLines={1}> {item.text} </Text>}
                 bottomDivider={true}
                 onPress={() =>
                     Alert.alert(
@@ -242,7 +245,24 @@ export default class Home extends Component {
         </Swipeout>
     )
 
+    onRefresh() {
+        //Clear old data of the list
+        this.setState({ message: {}, rowIndex: null });
+        //Call the Service to get the latest data
+        this.getData();
+        this.showData();
+        this.requestSmsPermission();
+    }
+
     render() {
+        if (this.state.refreshing) {
+            return (
+                //loading view while data is loading
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            );
+        }
         return (
             <View>
                 <View style={styles.row}>
@@ -264,6 +284,13 @@ export default class Home extends Component {
                     data={this.state.message.obj}
                     extraData={this.state.rowIndex}
                     renderItem={this.renderItem}
+                    refreshControl={
+                        <RefreshControl
+                            //refresh control used for the Pull to Refresh
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh.bind(this)}
+                        />
+                    }
                 />
             </View>
         )
