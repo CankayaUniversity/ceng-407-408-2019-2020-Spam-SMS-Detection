@@ -1,5 +1,8 @@
 # Spam SMS Detection Mobile Application
-Spam SMS Detection
+This application has been developed to detect and filter SMS spam. With this application, we:
+* Provide our users an SMS inbox which is much more relevant with respect to their interests.
+* Make the SMS inboxes of our users neat and organized, thus sparing them time.
+* Protect our users from the obtainment of their personal/confidential information use by SMS spammers and keyloggers via viruses and malicious software that are sent through spam SMS.
 
 ## Getting Started
 First of all, this application only works on Android. So it is necessary to connect an Android phone to the computer. In order to connect an android phone to a computer and run the application, it is necessary to activate USB Debugging. More information: [Running your app on Android devices](https://reactnative.dev/docs/running-on-device)
