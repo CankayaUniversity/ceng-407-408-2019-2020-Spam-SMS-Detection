@@ -22,15 +22,19 @@ export default class ChangePassword extends Component {
         const { password } = this.state;
         var email = await AsyncStorage.getItem("session_ticket");
 
-        http.post('/changepassword', { email, password })
-            .then(() => {
-                Keyboard.dismiss();
-                alert("You have successfully changed your password.");
-            })
-            .catch((err) => {
-                console.log(err);
-                alert("Invalid entry or such a password already exists.");
-            })
+        if (password === null || password === undefined || password === "") {
+            alert("Invalid password.");
+        } else {
+            http.post('/changepassword', { email, password })
+                .then(() => {
+                    Keyboard.dismiss();
+                    alert("You have successfully changed your password.");
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Invalid entry or such a password already exists.");
+                })
+        }
     }
 
     render() {
