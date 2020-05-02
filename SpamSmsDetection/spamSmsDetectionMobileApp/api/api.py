@@ -46,14 +46,12 @@ Classifier.fit(vectorize_text, train_data.v1)
 def register():
     request.get_json(force=True)
     cur = mysql.connection.cursor()
-    username = request.get_json()['username']
     phone = request.get_json()['phone']
     email = request.get_json()['email']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
     avatar = request.get_json()['avatar']
 	
-    cur.execute("INSERT INTO users (username, email, password, phone, avatar) VALUES ('" +  
-		str(username) + "', '" +
+    cur.execute("INSERT INTO users (email, password, phone, avatar) VALUES ('" +  
         str(email) + "', '" +
         str(password) + "', '" +
         str(phone) + "', '" + 
@@ -61,7 +59,6 @@ def register():
     mysql.connection.commit()
 	
     result = {
-        'username': username,
 		'email' : email,
 		'password' : password,
         'phone': phone,

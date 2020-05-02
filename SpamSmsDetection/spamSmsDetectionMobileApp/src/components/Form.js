@@ -17,7 +17,6 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
             phone: null,
             email: null,
             password: null,
@@ -30,7 +29,7 @@ export default class Form extends Component {
     }
 
     saveData = async () => {
-        const { username, email, password, phone, avatar } = this.state;
+        const { email, password, phone, avatar } = this.state;
 
         //save data with asyncstorage
         let loginDetails = {
@@ -40,7 +39,7 @@ export default class Form extends Component {
 
         if (this.props.type !== 'Login') {            
             //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-            http.post('/register', { username, email, password, phone, avatar })
+            http.post('/register', { email, password, phone, avatar })
                 .then(() => {
                     Keyboard.dismiss();
                     alert("You successfully registered. Email: " + email + ' phone: ' + phone);
@@ -58,8 +57,8 @@ export default class Form extends Component {
                     console.log(email, password)
                     console.log(res.data)
 
-                    if (res.data.includes("Invalid username and password")) {
-                        alert("Wrong or invalid email");
+                    if (res.data.includes("Invalid email and password")) {
+                        alert("Wrong or invalid email and password");
                     } else {
                         this.setSessionTicket(String(email));
                         Actions.home({ type: 'reset' })
@@ -67,7 +66,7 @@ export default class Form extends Component {
                 })
                 .catch((err) => {
                     console.log(err);
-                    alert("Wrong or invalid email");
+                    alert("Wrong or invalid email and password");
                 })
         }
     }
@@ -80,14 +79,6 @@ export default class Form extends Component {
 
     render() {
         const signupScreen = <View style={styles.container}>
-            <TextInput style={styles.inputBox}
-                onChangeText={(username) => this.setState({ username })}
-                underlineColorAndroid='rgba(0,0,0,0)'
-                placeholder="Username"
-                placeholderTextColor="#002f6c"
-                selectionColor="#fff"
-                onSubmitEditing={() => this.password.focus()} />
-
             <TextInput style={styles.inputBox}
                 onChangeText={(phone) => this.setState({ phone })}
                 underlineColorAndroid='rgba(0,0,0,0)'

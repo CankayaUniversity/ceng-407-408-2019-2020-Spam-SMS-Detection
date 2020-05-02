@@ -30,7 +30,7 @@ CREATE TABLE `messages` (
   `isSpam` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1351 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1446 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1341,'egedikoglu1@gmail.com','Are you unique enough? Find out from 30th August. www.areyouunique.co.uk','+905444277980',1),(1342,'egedikoglu1@gmail.com','I plane to give on this month end.','+905444277980',0),(1343,'egedikoglu1@gmail.com','Tell where you reached','+905444277980',0),(1344,'egedikoglu1@gmail.com','SMS. ac Sptv: The New Jersey Devils and the Detroid Red Wings play Ice Hockey. Correct or Incorrect? End? Reply END SPTV','+905444277980',1),(1345,'egedikoglu1@gmail.com','Is that seriously how you spell his name?','+905444277980',0);
+INSERT INTO `messages` VALUES (1436,'egedikoglu1@gmail.com','Are you unique enough? Find out from 30th August. www.areyouunique.co.uk','+905444277980',NULL),(1437,'egedikoglu1@gmail.com','I plane to give on this month end.','+905444277980',NULL),(1438,'egedikoglu1@gmail.com','Tell where you reached','+905444277980',NULL),(1439,'egedikoglu1@gmail.com','SMS. ac Sptv: The New Jersey Devils and the Detroid Red Wings play Ice Hockey. Correct or Incorrect? End? Reply END SPTV','+905444277980',NULL),(1440,'egedikoglu1@gmail.com','Is that seriously how you spell his name?','+905444277980',NULL),(1441,'m@m.com','Are you unique enough? Find out from 30th August. www.areyouunique.co.uk','+905444277980',NULL),(1442,'m@m.com','I plane to give on this month end.','+905444277980',NULL),(1443,'m@m.com','Tell where you reached','+905444277980',NULL),(1444,'m@m.com','SMS. ac Sptv: The New Jersey Devils and the Detroid Red Wings play Ice Hockey. Correct or Incorrect? End? Reply END SPTV','+905444277980',NULL),(1445,'m@m.com','Is that seriously how you spell his name?','+905444277980',NULL);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,17 +52,15 @@ DROP TABLE IF EXISTS `users`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   `phone` varchar(256) NOT NULL,
   `avatar` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `phone_UNIQUE` (`phone`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +69,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (6,'muazzez','m@m.com','$2b$12$3vbMbgG34lnQPwBRK1mFJ.75xSELdchu.xk5d90GsmQ5bCkjozsQ2','05445554455','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'),(11,'sarper','s@s.com','$2b$12$NXaUXr5MoGbpup9LF3peTOUtJU5UQ2y4ZjY3L4lshaJPsUv2ARS62','05071737636','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'),(12,'Beko','b@b.com','$2b$12$/Aw2hijXxpK1QBkp9fPEW.S7DRiitaNYk7wzF2MfTNFLMb21jfTKq','05322222222','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'),(21,'emre','egedikoglu1@gmail.com','$2b$12$cmystaiAHfUSVolP7ER7j.7SMYomWuWM4Sv9zPLj9uEFutWRN03sa','05444277980','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png');
+INSERT INTO `users` VALUES (22,'egedikoglu1@gmail.com','$2b$12$fUoZ1JZV6mxS61k5pLrXXurd3ynrrhCMOkzRVjUaquk5h04G0Pa9G','05444277980','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'),(24,'m@m.com','$2b$12$lvcX1aHt3Drg6FpJUzjFOuGlArgJS5xSmWls6oHeB39nhYWEzQzEW','05445554455','https://iupac.org/wp-content/uploads/2018/05/default-avatar.png');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -84,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-01 13:46:40
+-- Dump completed on 2020-05-02 13:25:26
