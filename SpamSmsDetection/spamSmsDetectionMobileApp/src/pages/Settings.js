@@ -60,7 +60,8 @@ export default class Settings extends Component {
 
         http.post('/deleteaccount', { email })
             .then((res) => {
-                Actions.login();
+                AsyncStorage.setItem("session_ticket", "null");
+                Actions.start({ type: 'reset' });
             })
             .catch((err) => {
                 console.log(err);
