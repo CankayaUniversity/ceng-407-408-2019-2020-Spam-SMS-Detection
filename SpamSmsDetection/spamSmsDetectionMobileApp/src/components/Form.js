@@ -43,11 +43,12 @@ export default class Form extends Component {
             http.post('/register', { username, email, password, phone, avatar })
                 .then(() => {
                     Keyboard.dismiss();
-                    alert("You successfully registered. Email: " + email + ' password: ' + password);
+                    alert("You successfully registered. Email: " + email + ' phone: ' + phone);
                     Actions.login();
                 })
                 .catch((err) => {
                     console.log(err);
+                    alert("Email or phone number is used");
                 })
         }
         else if (this.props.type == 'Login') {
