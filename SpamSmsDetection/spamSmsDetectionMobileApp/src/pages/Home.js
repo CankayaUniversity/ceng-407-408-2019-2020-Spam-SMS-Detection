@@ -90,17 +90,23 @@ export default class Home extends Component {
             indexFrom: 0, // start from index 0
             maxCount: 1000, // count of SMS to return each time
         };
-        SmsAndroid.list(
-            JSON.stringify(filter),
+        await SmsAndroid.list(
+            await JSON.stringify(filter),
             async (fail) => {
                 await console.log('Failed with this error: ' + fail);
             },
             async (count, smsList) => {
                 await console.log('Count: ', count);
                 await console.log('List: ', smsList);
-                var arr = JSON.parse(smsList);
+                var arr = await JSON.parse(smsList);
 
-                await arr.forEach((object) => {
+                async function asyncForEach(array, callback) {
+                    for (let index = 0; index < array.length; index++) {
+                        await callback(array[index], index, array);
+                    }
+                }
+
+                await asyncForEach(arr, async (object) => {
                     console.log('Id: ' + object._id);
                     console.log('Message: ' + object.body);
                     //alert('Message: ' + object.body)
@@ -113,18 +119,12 @@ export default class Home extends Component {
                     console.log('Email: ' + email);
 
                     http.post('/setsms', { email, sender, textMessage })
-                        .then((res) => {
-                            if (res) {
-                                console.log("SMS Added");
-                            }
-                        })
-                        .then(() => {
-                            console.log("Yes");
-                        })
                         .catch((err) => {
                             console.log(err);
                             alert("Wrong SMS Not Added");
                         })
+                    console.log("SMS Added");
+                    console.log('Yes');
                 });
             },
         );
