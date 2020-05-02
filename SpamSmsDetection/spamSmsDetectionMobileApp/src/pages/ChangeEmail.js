@@ -25,17 +25,35 @@ export default class ChangeEmail extends Component {
     saveData = async () => {
         const { email } = this.state;
         var emailCurrent = await AsyncStorage.getItem("session_ticket");
+        var invalid = false;
 
-        http.post('/changeemail', { email, emailCurrent })
-            .then(() => {
-                Keyboard.dismiss();
-                alert("You have successfully changed your email. Email: " + email);
-                this.setSessionTicket(String(email));
+        await http.post('/getemail', { email, emailCurrent })
+            .then((res) => {
+                if (res.data === "Invalid email") {
+                    console.log("invalid email");
+                    invalid = true;
+                }
             })
             .catch((err) => {
                 console.log(err);
-                alert("Invalid entry or such an email already exists. Email: " + email);
             })
+
+        if (invalid) {
+            alert("Email already exists. Email: " + email);
+        } else if (email === null || email === undefined || email === "") {
+            alert("Invalid email.");
+        } else {
+            http.post('/changeemail', { email, emailCurrent })
+                .then(() => {
+                    Keyboard.dismiss();
+                    alert("You have successfully changed your email. Email: " + email);
+                    this.setSessionTicket(String(email));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Invalid entry or such an email already exists. Email: " + email);
+                })
+        }
     }
 
     render() {

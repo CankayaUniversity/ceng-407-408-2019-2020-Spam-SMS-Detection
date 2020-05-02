@@ -323,6 +323,30 @@ def changephone():
 
     return jsonify({'result' : result})
 
+@app.route('/getemail', methods=['POST'])
+def getemail():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    email = request.get_json()['email']
+    emailCurrent = request.get_json()['emailCurrent']
+    result = ""
+	
+    cur.execute("SELECT email FROM users where email = '" + str(email) + "'")
+    rv = cur.fetchone()
+    mysql.connection.commit()
+	
+    print(rv)
+
+    if rv != None:
+        s1 = json.dumps(rv)
+        myJson = json.loads(s1)
+        rvEmail = myJson["email"]
+        print(rvEmail)
+        if emailCurrent != rvEmail:
+            result = "Invalid email"
+    
+    return result
+
 @app.route('/changeemail', methods=['POST'])
 def changeemail():
     request.get_json(force=True)
