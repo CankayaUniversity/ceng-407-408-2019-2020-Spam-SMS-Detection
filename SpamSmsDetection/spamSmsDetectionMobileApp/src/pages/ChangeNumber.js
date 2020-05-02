@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, AsyncSto
 import axios from 'axios';
 
 //const serverUrl = 'http://192.168.70.2:5000';
-const serverUrl = 'http://172.16.0.112:5000';
+const serverUrl = 'http://192.168.1.107:5000';
 const http = axios.create({
     baseURL: serverUrl,
     withCredentials: true

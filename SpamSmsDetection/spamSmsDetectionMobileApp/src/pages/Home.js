@@ -10,7 +10,7 @@ import SmsAndroid from 'react-native-get-sms-android';
 import axios from 'axios';
 
 //const serverUrl = 'http://192.168.70.2:5000';
-const serverUrl = 'http://172.16.0.112:5000';
+const serverUrl = 'http://192.168.1.107:5000';
 const http = axios.create({
     baseURL: serverUrl,
     withCredentials: true
@@ -44,15 +44,15 @@ export default class Home extends Component {
         await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_SMS,
             {
-                title: 'AndoridPermissionExample Read Sms Permission',
-                message: 'AndoridPermissionExample App needs access to your sms ',
+                title: 'Read Sms Permission',
+                message: 'App needs access to your sms ',
             }
         );
         await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.RECEIVE_SMS,
             {
-                title: 'AndoridPermissionExample Write Sms Permission',
-                message: 'AndoridPermissionExample App needs access to your sms ',
+                title: 'Write Sms Permission',
+                message: 'App needs access to your sms ',
             }
         );
         /*if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -146,7 +146,7 @@ export default class Home extends Component {
 
     showData = async () => {
         var session = await AsyncStorage.getItem("session_ticket");
-        alert('session: ' + session);
+        //alert('session: ' + session);
     }
 
     getData = async () => {

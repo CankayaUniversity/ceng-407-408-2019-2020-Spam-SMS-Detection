@@ -44,7 +44,7 @@ export default class Start extends Component {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                <Text>Yükleniyor..</Text>
+                <Text>Loading...</Text>
             </View>
         );
     }
