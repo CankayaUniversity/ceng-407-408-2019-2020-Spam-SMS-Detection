@@ -21,16 +21,34 @@ export default class ChangeNumber extends Component {
     saveData = async () => {
         const { phone } = this.state;
         var email = await AsyncStorage.getItem("session_ticket");
+        var invalid = false;
 
-        http.post('/changephone', { email, phone })
-            .then(() => {
-                Keyboard.dismiss();
-                alert("You have successfully changed your phone number. Phone number: " + phone);
+        await http.post('/getphone', { email, phone })
+            .then((res) => {
+                if (res.data === "Invalid phone") {
+                    console.log("invalid phone");
+                    invalid = true;
+                }
             })
             .catch((err) => {
                 console.log(err);
-                alert("Invalid entry or such a phone number already exists. Phone number: " + phone);
             })
+
+        if (invalid) {
+            alert("Phone number already exists. Phone number: " + phone);
+        } else if (phone === null || phone === undefined || phone === "") {
+            alert("Invalid phone number.");
+        } else {
+            http.post('/changephone', { email, phone })
+                .then(() => {
+                    Keyboard.dismiss();
+                    alert("You have successfully changed your phone number. Phone number: " + phone);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Invalid entry or such a phone number already exists. Phone number: " + phone);
+                })
+        }
     }
 
     render() {

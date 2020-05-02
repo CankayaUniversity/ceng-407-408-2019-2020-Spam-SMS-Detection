@@ -282,6 +282,30 @@ def deleteaccount():
     )
     return response
 
+@app.route('/getphone', methods=['POST'])
+def getphone():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    phone = request.get_json()['phone']
+    email = request.get_json()['email']
+    result = ""
+	
+    cur.execute("SELECT email FROM users where phone = '" + str(phone) + "'")
+    rv = cur.fetchone()
+    mysql.connection.commit()
+	
+    print(rv)
+
+    if rv != None:
+        s1 = json.dumps(rv)
+        myJson = json.loads(s1)
+        rvEmail = myJson["email"]
+        print(rvEmail)
+        if email != rvEmail:
+            result = "Invalid phone"
+    
+    return result
+
 @app.route('/changephone', methods=['POST'])
 def changephone():
     request.get_json(force=True)
