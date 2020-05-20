@@ -37,37 +37,45 @@ export default class Form extends Component {
             password: password
         }
 
-        if (this.props.type !== 'Login') {            
+        if (this.props.type !== 'Login') {
             //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-            http.post('/register', { email, password, phone, avatar })
-                .then(() => {
-                    Keyboard.dismiss();
-                    alert("You successfully registered. Email: " + email + ' phone: ' + phone);
-                    Actions.login();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert("Email or phone number is used");
-                })
+            if (email && password && phone) {
+                http.post('/register', { email, password, phone, avatar })
+                    .then(() => {
+                        Keyboard.dismiss();
+                        alert("You successfully registered. Email: " + email + ' phone: ' + phone);
+                        Actions.login();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert("Email or phone number is used");
+                    })
+            } else {
+                alert("Missing or invalid entry");
+            }
         }
         else if (this.props.type == 'Login') {
-            http.post('/login', { email, password })
-                .then((res) => {
-                    console.log('SUCCESS')
-                    console.log(email, password)
-                    console.log(res.data)
+            if (email && password) {
+                http.post('/login', { email, password })
+                    .then((res) => {
+                        console.log('SUCCESS')
+                        console.log(email, password)
+                        console.log(res.data)
 
-                    if (res.data.includes("Invalid email and password")) {
+                        if (res.data.includes("Invalid email and password")) {
+                            alert("Wrong or invalid email and password");
+                        } else {
+                            this.setSessionTicket(String(email));
+                            Actions.home({ type: 'reset' })
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
                         alert("Wrong or invalid email and password");
-                    } else {
-                        this.setSessionTicket(String(email));
-                        Actions.home({ type: 'reset' })
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert("Wrong or invalid email and password");
-                })
+                    })
+            } else {
+                alert("Missing or invalid entry");
+            }
         }
     }
 
