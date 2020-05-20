@@ -31,6 +31,7 @@ export default class Form extends Component {
     saveData = async () => {
         const { email, password, phone, avatar } = this.state;
         var invalid = false;
+        var resData = '';
 
         //save data with asyncstorage
         let loginDetails = {
@@ -73,11 +74,12 @@ export default class Form extends Component {
             if (email && password) {
                 http.post('/login', { email, password })
                     .then((res) => {
+                        resData = JSON.stringify(res.data);
                         console.log('SUCCESS')
                         console.log(email, password)
-                        console.log(res.data)
+                        console.log(resData)
 
-                        if (res.data.includes("Invalid email and password")) {
+                        if (resData.includes("Invalid email and password")) {
                             alert("Wrong or invalid email and password");
                         } else {
                             this.setSessionTicket(String(email));

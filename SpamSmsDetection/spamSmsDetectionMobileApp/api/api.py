@@ -102,7 +102,9 @@ def login():
     cur.execute("SELECT * FROM users where email = '" + str(email) + "'")
     rv = cur.fetchone()
 	
-    if bcrypt.check_password_hash(rv['password'], password):
+    if rv == None:
+        result = jsonify({"error":"Invalid email and password"})
+    elif bcrypt.check_password_hash(rv['password'], password):
         access_token = create_access_token(identity = {'email': rv['email']})
         result = access_token
     else:
