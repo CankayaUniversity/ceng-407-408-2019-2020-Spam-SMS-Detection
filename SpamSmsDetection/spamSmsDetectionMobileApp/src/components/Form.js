@@ -30,6 +30,7 @@ export default class Form extends Component {
 
     saveData = async () => {
         const { email, password, phone, avatar } = this.state;
+        var invalid = false;
 
         //save data with asyncstorage
         let loginDetails = {
@@ -39,7 +40,21 @@ export default class Form extends Component {
 
         if (this.props.type !== 'Login') {
             //AsyncStorage.setItem('loginDetails', JSON.stringify(loginDetails));
-            if (email && password && phone) {
+
+            await http.post('/getuser', { email, phone })
+                .then((res) => {
+                    if (res.data === "Invalid email or phone") {
+                        console.log("Invalid email or phone");
+                        invalid = true;
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+            if (invalid) {
+                alert("Phone number or email already exists.");
+            } else if (email && password && phone) {
                 http.post('/register', { email, password, phone, avatar })
                     .then(() => {
                         Keyboard.dismiss();

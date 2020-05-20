@@ -41,6 +41,29 @@ Vectorizer = TfidfVectorizer()
 vectorize_text = Vectorizer.fit_transform(train_data.v2)
 Classifier.fit(vectorize_text, train_data.v1)
 
+@app.route('/getuser', methods=['POST'])
+def getuser():
+    request.get_json(force=True)
+    cur = mysql.connection.cursor()
+    phone = request.get_json()['phone']
+    email = request.get_json()['email']
+    result = ""
+	
+    cur.execute("SELECT email FROM users where email = '" + str(email) + "'")
+    rv = cur.fetchone()
+    mysql.connection.commit()
+
+    cur.execute("SELECT phone FROM users where phone = '" + str(phone) + "'")
+    rv2 = cur.fetchone()
+    mysql.connection.commit()
+	
+    print(rv)
+    print(rv2)
+
+    if rv != None or rv2 != None:
+        result = "Invalid email or phone"
+    
+    return result
 
 @app.route('/register', methods=['POST'])
 def register():
