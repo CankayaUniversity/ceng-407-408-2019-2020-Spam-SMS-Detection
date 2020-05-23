@@ -110,7 +110,7 @@ export default class Form extends Component {
                 placeholder="Phone Number"
                 placeholderTextColor="#002f6c"
                 selectionColor="#fff"
-                onSubmitEditing={() => this.password.focus()} />
+                onSubmitEditing={() => this.email.focus()} />
 
             <TextInput style={styles.inputBox}
                 onChangeText={(email) => this.setState({ email })}
@@ -119,6 +119,7 @@ export default class Form extends Component {
                 placeholderTextColor="#002f6c"
                 selectionColor="#fff"
                 keyboardType="email-address"
+                ref={(input) => this.email = input}
                 onSubmitEditing={() => this.password.focus()} />
 
             <TextInput style={styles.inputBox}
