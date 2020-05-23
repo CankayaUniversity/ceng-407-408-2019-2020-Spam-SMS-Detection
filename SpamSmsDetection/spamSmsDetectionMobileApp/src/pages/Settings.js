@@ -49,7 +49,7 @@ export default class Settings extends Component {
     helpAlert = async () => {
         Alert.alert(
             'Help',
-            '1. This application is designed to filter the test messages on this device and detect spam content. \n\n 2. Upon launching, all of the text messages on this device will be displayed in the All Messages page. \n\n 3. Navigation to the Spam Box is possible by the use of the button with the "Spam Box" tag. \n\n 4. Inside the Spam Box, all of the detected spam messages will be displayed. \n\n 5. To update your user information, please use the "User Information" option under Settings. \n\n 6. To log out of the application, please use the "Logout" button under Settings.',
+            '1. This application is designed to filter the text messages on this device and detect spam content. \n\n 2. Upon launching, all of the text messages on this device will be displayed in the All Messages page. \n\n 3. Navigation to the Spam Box is possible by the use of the button with the "Spam Box" tag. \n\n 4. Inside the Spam Box, all of the detected spam messages will be displayed. \n\n 5. To update your user information, please use the "User Information" option under Settings. \n\n 6. To log out of the application, please use the "Logout" button under Settings.',
         )
     }
 
