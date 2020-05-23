@@ -60,8 +60,7 @@ export default class ChangeNumber extends Component {
                     underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="Phone Number"
                     placeholderTextColor="#002f6c"
-                    selectionColor="#fff"
-                    onSubmitEditing={() => this.phone.focus()} />
+                    selectionColor="#fff" />
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText} onPress={this.saveData}>Update</Text>
                 </TouchableOpacity>

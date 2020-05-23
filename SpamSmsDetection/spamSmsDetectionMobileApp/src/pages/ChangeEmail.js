@@ -66,8 +66,7 @@ export default class ChangeEmail extends Component {
                     placeholder="Email"
                     placeholderTextColor="#002f6c"
                     selectionColor="#fff"
-                    keyboardType="email-address"
-                    onSubmitEditing={() => this.email.focus()} />
+                    keyboardType="email-address" />
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText} onPress={this.saveData}>Update</Text>
                 </TouchableOpacity>
